@@ -90,9 +90,7 @@ int main() {
 		glUniform3f(glGetUniformLocation(shader, "_Color"), triangleColor[0], triangleColor[1], triangleColor[2]);
 		glUniform1f(glGetUniformLocation(shader,"_Brightness"), triangleBrightness);
 
-		//Wireframe
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		//Shaded
+		
 		
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
