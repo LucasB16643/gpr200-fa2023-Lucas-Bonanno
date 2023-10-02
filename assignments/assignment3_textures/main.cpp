@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <math.h>
 
 #include <ew/external/glad.h>
@@ -101,7 +101,7 @@ unsigned int createVAO(Vertex* vertexData, int numVertices, unsigned short* indi
 	unsigned int vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*numVertices, vertexData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertexData, GL_STATIC_DRAW);
 
 	//Element Buffer Object
 	unsigned int ebo;
@@ -110,7 +110,7 @@ unsigned int createVAO(Vertex* vertexData, int numVertices, unsigned short* indi
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * numIndices, indicesData, GL_STATIC_DRAW);
 
 	//Position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex,x));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, x));
 	glEnableVertexAttribArray(0);
 
 	//UV attribute
@@ -123,5 +123,4 @@ unsigned int createVAO(Vertex* vertexData, int numVertices, unsigned short* indi
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
-}
-
+}*/
