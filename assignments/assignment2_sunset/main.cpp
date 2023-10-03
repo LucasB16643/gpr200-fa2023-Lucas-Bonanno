@@ -9,6 +9,11 @@
 #include <imgui_impl_opengl3.h>
 #include <lLib/shader.h>
 
+struct Vertex {
+	float x, y, z;
+	float u, v;
+};
+
 unsigned int createShader(GLenum shaderType, const char* sourceCode);
 unsigned int createShaderProgram(const char* vertexShaderSource, const char* fragmentShaderSource);
 unsigned int createVAO(Vertex* vertexData, int numVertices, unsigned int* indicesData, int numIndices);
@@ -18,10 +23,7 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 const int SCREEN_WIDTH = 1080;
 const int SCREEN_HEIGHT = 720;
 
-struct Vertex {
-	float x, y, z;
-	float u, v;
-};
+
 
 
 Vertex vertices[4] = {

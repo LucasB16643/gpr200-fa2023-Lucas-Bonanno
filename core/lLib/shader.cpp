@@ -1,5 +1,5 @@
 #include "shader.h"
-
+#include "../ew/external/glad.h"
 namespace lLib {
 	std::string loadShaderSourceFromFile(const std::string& filePath) {
 		std::ifstream fstream(filePath);
