@@ -1,4 +1,4 @@
-/*#include <stdio.h>
+#include <stdio.h>
 #include <math.h>
 
 #include <ew/external/glad.h>
@@ -9,6 +9,7 @@
 #include <imgui_impl_opengl3.h>
 
 #include <ew/shader.h>
+#include <lLib/texture.h>
 
 struct Vertex {
 	float x, y, z;
@@ -33,6 +34,8 @@ unsigned short indices[6] = {
 };
 
 int main() {
+	
+
 	printf("Initializing...");
 	if (!glfwInit()) {
 		printf("GLFW failed to init!");
@@ -58,19 +61,55 @@ int main() {
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init();
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+
 	ew::Shader shader("assets/vertexShader.vert", "assets/fragmentShader.frag");
+	ew::Shader character("assets/character.vert", "assets/character.frag");
+	//Example usage in main.cpp
+	unsigned int brickTexture = loadTexture("assets/brick.jpg", GL_REPEAT, GL_LINEAR);
+	unsigned int noiseTexture = loadTexture("assets/noiseTexture.png", GL_REPEAT, GL_LINEAR);
+	unsigned int characterTexture = loadTexture("assets/character.png", GL_REPEAT, GL_LINEAR);
+	//Bind to texture unit 0
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, brickTexture);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, noiseTexture);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, characterTexture);
+
+	
+
 
 	unsigned int quadVAO = createVAO(vertices, 4, indices, 6);
 
 	glBindVertexArray(quadVAO);
+
+	
 
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 		glClearColor(0.3f, 0.4f, 0.9f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+
+		
 		//Set uniforms
 		shader.use();
+		
+		shader.setInt("_BrickTexture", 0);
+		//Make sampler2D _MarioTexture sample from unit 1
+		shader.setInt("_NoiseTexture", 1);
+
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, NULL);
+
+		character.use();
+
+		character.setInt("_CharacterTexture", 2);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, NULL);
 
@@ -123,4 +162,4 @@ unsigned int createVAO(Vertex* vertexData, int numVertices, unsigned short* indi
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
-}*/
+}
