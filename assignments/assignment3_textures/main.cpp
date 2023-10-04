@@ -104,12 +104,21 @@ int main() {
 		//Make sampler2D _MarioTexture sample from unit 1
 		shader.setInt("_NoiseTexture", 1);
 
+		//The current time in seconds this frame
+		float time = (float)glfwGetTime();
+		
+		
+		//Set the value of the variable at the location
+		shader.setFloat("_Time", time);
+
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, NULL);
 
 		character.use();
 
 		character.setInt("_CharacterTexture", 2);
+
+		character.setFloat("_Time", time);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, NULL);
 
