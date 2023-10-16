@@ -11,6 +11,8 @@
 #include <ew/shader.h>
 #include <ew/procGen.h>
 #include <ew/transform.h>
+#include <lLib/transformations.h>
+#include <lLib/camera.h>
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 
@@ -54,6 +56,8 @@ int main() {
 	//Depth testing - required for depth sorting!
 	glEnable(GL_DEPTH_TEST);
 
+	lLib::Camera camera;
+
 	ew::Shader shader("assets/vertexShader.vert", "assets/fragmentShader.frag");
 	
 	//Cube mesh
@@ -65,6 +69,16 @@ int main() {
 		cubeTransforms[i].position.x = i % (NUM_CUBES / 2) - 0.5;
 		cubeTransforms[i].position.y = i / (NUM_CUBES / 2) - 0.5;
 	}
+	
+
+	camera.position = ew::Vec3(0, 0, 5);
+	camera.target = ew::Vec3(0, 0, 0);
+	camera.fov = 60;
+	camera.aspectRatio = float(SCREEN_WIDTH) / float(SCREEN_HEIGHT);
+	camera.orthoSize = 6;
+	camera.nearPlane = .1;
+	camera.farPlane = 100;
+	camera.orthographic = true;
 
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
@@ -74,7 +88,10 @@ int main() {
 
 		//Set uniforms
 		shader.use();
+		shader.setMat4("_View", camera.ViewMatrix());
 
+		shader.setMat4("_Projection", camera.ProjectionMatrix());
+		
 		//TODO: Set model matrix uniform
 		for (size_t i = 0; i < NUM_CUBES; i++)
 		{
@@ -82,6 +99,8 @@ int main() {
 			shader.setMat4("_Model", cubeTransforms[i].getModelMatrix());
 			cubeMesh.draw();
 		}
+		
+		
 
 		//Render UI
 		{
@@ -102,6 +121,8 @@ int main() {
 				ImGui::PopID();
 			}
 			ImGui::Text("Camera");
+			ImGui::DragFloat3("Position", &camera.position.x, 0.05f);
+			ImGui::DragFloat3("Target", &camera.target.x, 0.05f);
 			ImGui::End();
 			
 			ImGui::Render();

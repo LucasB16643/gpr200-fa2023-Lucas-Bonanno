@@ -58,6 +58,12 @@ int main() {
 	lLib::Transform transform [4];
 	//Cube mesh
 	ew::Mesh cubeMesh(ew::createCube(0.5f));
+
+	for (size_t i = 0; i < NUM_CUBES; i++)
+	{
+		transform[i].position.x = i % (NUM_CUBES / 2) - 0.5;
+		transform[i].position.y = i / (NUM_CUBES / 2) - 0.5;
+	}
 	
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
