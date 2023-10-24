@@ -21,5 +21,13 @@ namespace lLib {
 			}
 		};
 	}; //View->Clip
+	struct CameraControls {
+		double prevMouseX, prevMouseY; //Mouse position from previous frame
+		float yaw = -90, pitch = 0; //Degrees
+		float mouseSensitivity = 0.1f; //How fast to turn with mouse
+		bool firstMouse = true; //Flag to store initial mouse position
+		float moveSpeed = 5.0f; //How fast to move with arrow keys (M/S)
+	};
+
 }
 

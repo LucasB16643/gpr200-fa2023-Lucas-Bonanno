@@ -89,7 +89,7 @@ namespace lLib {
 			float t = height / 2;
 			float b = -t;
 
-			ew::Mat4 projection = (
+			ew::Mat4 projection = ew::Mat4 (
 				2 / (r - l), 0, 0, -(r + l) / (r - l),
 				0, 2 / (t - b), 0, -(t + b) / (t - b),
 				0, 0, -(2) / (far - near), -(far + near) / (far - near),
@@ -101,7 +101,7 @@ namespace lLib {
 		//Perspective projection
 		//fov = vertical aspect ratio (radians)
 		inline ew::Mat4 Perspective(float fov, float aspect, float near, float far) {
-			 ew::Mat4 perspectiveProjection = (
+			 ew::Mat4 perspectiveProjection = ew::Mat4 (
 				1/(tan(fov/2) * aspect), 0, 0, 0,
 				0, 1/(tan(fov/2)), 0, 0,
 				0, 0, (near + far)/(near - far), (2*far*near)/(near - far),
