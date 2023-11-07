@@ -14,6 +14,8 @@
 #include <ew/transform.h>
 #include <ew/camera.h>
 #include <ew/cameraController.h>
+#include <lLib/procGen.h>
+
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void resetCamera(ew::Camera& camera, ew::CameraController& cameraController);
@@ -77,13 +79,28 @@ int main() {
 
 	ew::Shader shader("assets/vertexShader.vert", "assets/fragmentShader.frag");
 	unsigned int brickTexture = ew::loadTexture("assets/brick_color.jpg",GL_REPEAT,GL_LINEAR);
-
+	ew::MeshData sphereMeshData = lLib::createSphere(0.5f, 16);
+	ew::MeshData cylinderMeshData = lLib::createCylinder(1.0f, 0.5f, 16);
+	ew::MeshData planeMeshData = lLib::createPlane(0.5f, 10);
 	//Create cube
 	ew::MeshData cubeMeshData = ew::createCube(0.5f);
 	ew::Mesh cubeMesh(cubeMeshData);
+	//Create mesh renderer
+	ew::Mesh sphereMesh(sphereMeshData);
+	ew::Mesh cylinderMesh(cylinderMeshData);
+	ew::Mesh planeMesh(planeMeshData);
 
 	//Initialize transforms
 	ew::Transform cubeTransform;
+	//Initialize transform
+	ew::Transform sphereTransform;
+	sphereTransform.position = ew::Vec3(1.0f, 0.0f, 0.0f);
+
+	ew::Transform cylinderTransform;
+	cylinderTransform.position = ew::Vec3(2.5f, 0.0f, 0.0f);
+
+	ew::Transform planeTransform;
+	planeTransform.position = ew::Vec3(-1.0f, 0.0f, 0.0f);
 
 	resetCamera(camera,cameraController);
 
@@ -120,6 +137,15 @@ int main() {
 		//Draw cube
 		shader.setMat4("_Model", cubeTransform.getModelMatrix());
 		cubeMesh.draw((ew::DrawMode)appSettings.drawAsPoints);
+
+		shader.setMat4("_Model", sphereTransform.getModelMatrix());
+		sphereMesh.draw((ew::DrawMode)appSettings.drawAsPoints);
+
+		shader.setMat4("_Model", cylinderTransform.getModelMatrix());
+		cylinderMesh.draw((ew::DrawMode)appSettings.drawAsPoints);
+
+		shader.setMat4("_Model", planeTransform.getModelMatrix());
+		planeMesh.draw((ew::DrawMode)appSettings.drawAsPoints);
 
 		//Render UI
 		{

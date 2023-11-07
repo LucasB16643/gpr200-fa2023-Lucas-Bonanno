@@ -1,4 +1,5 @@
-#include <lLib/transformations.h>
+#include "transformations.h"
+
 namespace lLib {
 	struct Camera {
 		ew::Vec3 position; //Camera body position
@@ -10,7 +11,7 @@ namespace lLib {
 		bool orthographic; //Perspective or orthographic?
 		float orthoSize; //Height of orthographic frustum
 		ew::Mat4 ViewMatrix() {
-			return LookAt(position, target, ew::Vec3(0, 1, 0));
+			return lLib::LookAt(position, target, ew::Vec3(0, 1, 0));
 		}; //World->View
 		ew::Mat4 ProjectionMatrix() {
 			if (orthographic) {
