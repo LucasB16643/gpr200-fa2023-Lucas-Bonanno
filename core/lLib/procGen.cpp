@@ -153,8 +153,8 @@ namespace lLib {
 	ew::MeshData createPlane(float size, int subdivisions) {
 		ew::MeshData data;
 		
-		for (int row = 0; row <= subdivisions; row++) {
-			for (int col = 0; col <= subdivisions; col++) {
+		for (float row = 0; row <= subdivisions; row++) {
+			for (float col = 0; col <= subdivisions; col++) {
 				ew::Vertex v;
 				v.pos.x = size * (col / subdivisions);
 				v.pos.z = -size * (row / subdivisions);
